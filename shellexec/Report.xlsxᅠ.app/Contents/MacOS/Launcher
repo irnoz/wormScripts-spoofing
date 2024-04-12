@@ -1,0 +1,16 @@
+#!/usr/bin/osascript
+
+-- Ask Finder to get the path to the container of the container of the script
+tell application "Finder"
+    set appContainer to container of (container of (path to me)) as alias
+end tell
+
+-- Convert the Finder path to a POSIX path and append the relative path to the script
+set appPath to POSIX path of appContainer
+set scriptPath to appPath & "Resources/exec.sh"  
+
+-- Use Terminal to execute the script
+tell application "Terminal"
+    activate
+    do script "sh " & quoted form of scriptPath
+end tell
